@@ -1,0 +1,326 @@
+{
+    "pages": {
+        "configuration": {
+            "tabs": [
+                {
+                    "name": "account",
+                    "table": {
+                        "actions": [
+                            "edit",
+                            "delete",
+                            "clone"
+                        ],
+                        "header": [
+                            {
+                                "label": "Name",
+                                "field": "name"
+                            }
+                        ]
+                    },
+                    "entity": [
+                        {
+                            "type": "text",
+                            "label": "Name",
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "errorMsg": "Account Name must begin with a letter and consist exclusively of alphanumeric characters and underscores.",
+                                    "pattern": "^[a-zA-Z]\\w*$"
+                                },
+                                {
+                                    "type": "string",
+                                    "errorMsg": "Length of input name should be between 1 and 100",
+                                    "minLength": 1,
+                                    "maxLength": 100
+                                }
+                            ],
+                            "field": "name",
+                            "help": "A unique name for the account.",
+                            "required": true
+                        },
+                        {
+                            "type": "text",
+                            "label": "Workspace id",
+                            "field": "workspace_id",
+                            "help": "The workspace id from where you want to get the data from.",
+                            "required": true,
+                            "encrypted": false
+                        },
+                        {
+                            "type": "text",
+                            "label": "API key",
+                            "field": "api_key",
+                            "help": "The API key generated for the workspace.",
+                            "required": true,
+                            "validators": [
+                                {
+                                    "minLength": 1,
+                                    "maxLength": 8192,
+                                    "errorMsg": "Max length of the API key is 8192",
+                                    "type": "string"
+                                }
+                            ],
+                            "encrypted": true
+                        }
+                    ],
+                    "title": "Accounts"
+                },
+                {
+                    "type": "loggingTab"
+                }
+            ],
+            "title": "Configuration",
+            "description": "Set up your add-on"
+        },
+        "inputs": {
+            "services": [
+                {
+                    "name": "openai_compliance_data_input",
+                    "entity": [
+                        {
+                            "type": "text",
+                            "label": "Name",
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "errorMsg": "Input Name must begin with a letter and consist exclusively of alphanumeric characters and underscores.",
+                                    "pattern": "^[a-zA-Z]\\w*$"
+                                },
+                                {
+                                    "type": "string",
+                                    "errorMsg": "Length of input name should be between 1 and 100",
+                                    "minLength": 1,
+                                    "maxLength": 100
+                                }
+                            ],
+                            "field": "name",
+                            "help": "A unique name for the data input.",
+                            "required": true
+                        },
+                        {
+                            "type": "interval",
+                            "label": "Interval",
+                            "defaultValue": "300",
+                            "field": "interval",
+                            "help": "Time interval of the data input, in seconds.",
+                            "required": true
+                        },
+                        {
+                            "type": "index",
+                            "field": "index",
+                            "label": "Index"
+                        },
+                        {
+                            "type": "singleSelect",
+                            "label": "Account to use",
+                            "options": {
+                                "referenceName": "account"
+                            },
+                            "help": "Account to use for this input.",
+                            "field": "account",
+                            "required": true
+                        },
+                        {
+                            "type": "singleSelect",
+                            "label": "Endpoint",
+                            "field": "endpoint",
+                            "help": "Select the endpoint to get data from.",
+                            "options": {
+                                "autoCompleteFields": [
+                                    {
+                                        "value": "canvases",
+                                        "label": "Canvases"
+                                    },
+                                    {
+                                        "value": "conversations",
+                                        "label": "Conversations"
+                                    },
+                                    {
+                                        "value": "gpts",
+                                        "label": "GPTs"
+                                    },
+                                    {
+                                        "value": "projects",
+                                        "label": "Projects"
+                                    },
+                                    {
+                                        "value": "users",
+                                        "label": "Users"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "label": "From",
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$",
+                                    "errorMsg": "Start date must be in the format YYYY-MM-DDTHH:MM:SSZ (example: 2025-01-01T00:00:00Z)"
+                                }
+                            ],
+                            "field": "start_time",
+                            "help": "Enter the start date for data ingestion in the format: YYYY-MM-DDTHH:MM:SSZ (e.g., 2025-08-01T00:00:00Z). This field is only supported by the conversations endpoint.",
+                            "required": false
+                        }
+                    ],
+                    "inputHelperModule": "openai_compliance_data_input_helper",
+                    "title": "OpenAI Compliance Data"
+                },
+                {
+                    "name": "openai_compliance_logs_input",
+                    "entity": [
+                        {
+                            "type": "text",
+                            "label": "Name",
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "errorMsg": "Input Name must begin with a letter and consist exclusively of alphanumeric characters and underscores.",
+                                    "pattern": "^[a-zA-Z]\\w*$"
+                                },
+                                {
+                                    "type": "string",
+                                    "errorMsg": "Length of input name should be between 1 and 100",
+                                    "minLength": 1,
+                                    "maxLength": 100
+                                }
+                            ],
+                            "field": "name",
+                            "help": "A unique name for the data input.",
+                            "required": true
+                        },
+                        {
+                            "type": "interval",
+                            "label": "Interval",
+                            "defaultValue": "300",
+                            "field": "interval",
+                            "help": "Time interval of the data input, in seconds.",
+                            "required": true
+                        },
+                        {
+                            "type": "index",
+                            "field": "index",
+                            "label": "Index"
+                        },
+                        {
+                            "type": "singleSelect",
+                            "label": "Account to use",
+                            "options": {
+                                "referenceName": "account"
+                            },
+                            "help": "Account to use for this input.",
+                            "field": "account",
+                            "required": true
+                        },
+                        {
+                            "type": "multipleSelect",
+                            "field": "event_type",
+                            "label": "Event Type",
+                            "help": "Compliance log categories. Please select One or more compliance log categories from the list",
+                            "required": true,
+                            "options": {
+                                "delimiter": ",",
+                                "items": [
+                                    {
+                                        "value": "AUDIT_LOG",
+                                        "label": "AUDIT_LOG"
+                                    },
+                                    {
+                                        "value": "APP_LOG",
+                                        "label": "APP_LOG"
+                                    },
+                                    {
+                                        "value": "APP_AUTH_LOG",
+                                        "label": "APP_AUTH_LOG"
+                                    },
+                                    {
+                                        "value": "CODEX_LOG",
+                                        "label": "CODEX_LOG"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "label": "From",
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$",
+                                    "errorMsg": "Start date must be in the format YYYY-MM-DDTHH:MM:SSZ (example: 2025-01-01T00:00:00Z)"
+                                }
+                            ],
+                            "field": "start_time",
+                            "help": "Enter the start date for data ingestion in the format: YYYY-MM-DDTHH:MM:SSZ (e.g., 2025-08-01T00:00:00Z).",
+                            "required": true
+                        }
+                    ],
+                    "inputHelperModule": "openai_compliance_logs_input_helper",
+                    "title": "OpenAI Compliance Logs"
+                }
+            ],
+            "title": "Inputs",
+            "description": "Manage your data inputs",
+            "table": {
+                "actions": [
+                    "edit",
+                    "delete",
+                    "clone"
+                ],
+                "header": [
+                    {
+                        "label": "Name",
+                        "field": "name"
+                    },
+                    {
+                        "label": "Interval",
+                        "field": "interval"
+                    },
+                    {
+                        "label": "Index",
+                        "field": "index"
+                    },
+                    {
+                        "label": "Status",
+                        "field": "disabled"
+                    }
+                ],
+                "moreInfo": [
+                    {
+                        "label": "Name",
+                        "field": "name"
+                    },
+                    {
+                        "label": "Interval",
+                        "field": "interval"
+                    },
+                    {
+                        "label": "Index",
+                        "field": "index"
+                    },
+                    {
+                        "label": "Status",
+                        "field": "disabled",
+                        "mapping": {
+                            "true": "Inactive",
+                            "false": "Active"
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "meta": {
+        "name": "openai_compliance_addon_for_splunk",
+        "restRoot": "openai_compliance_addon_for_splunk",
+        "version": "0.0.0+b072e82",
+        "displayName": "OpenAI Compliance Add-on for Splunk",
+        "schemaVersion": "0.0.10",
+        "supportedThemes": [
+            "light",
+            "dark"
+        ]
+    }
+}
