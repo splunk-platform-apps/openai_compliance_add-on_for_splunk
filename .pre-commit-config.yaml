@@ -35,7 +35,7 @@ repos:
 
     # Check code for security issues, bugs, and bad patterns
 -   repo: https://github.com/returntocorp/semgrep
-    rev: v1.89.0
+    rev: v1.154.0
     hooks:
     -   id: semgrep
 
