@@ -20,4 +20,4 @@ permissions:
 
 jobs:
   call-workflow:
-    uses: splunk-platform-apps/.github/.github/workflows/reusable-build-appinspect-release.yml@1.0.1
+    uses: splunk-platform-apps/.github/.github/workflows/reusable-build-appinspect-release.yml@1
