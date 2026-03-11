@@ -18,6 +18,39 @@ def validate_input(definition: smi.ValidationDefinition):
     return
 
 
+def get_canvases(helper, api_key, workspace_id, params):
+    users, last_id = helper.make_request(api_key, workspace_id, USERS, params)
+
+    canvases = []
+
+    if users:
+        for user in users:
+            user_id = user["id"]
+            user_canvases_endpoint = USER_CANVASES.format(user_id=user_id)
+
+            # Get each canvas from each user
+            user_canvases, last_user_canvas_id = helper.make_request(
+                api_key, workspace_id, user_canvases_endpoint, {}
+            )
+
+            if user_canvases:
+                for canvas in user_canvases:
+                    canvas_id = canvas["id"]
+                    canvas_content_endpoint = CANVAS_CONTENT.format(
+                        user_id=user_id, textdoc_id=canvas_id
+                    )
+
+                    # Get the canvas content
+                    canvas_content, last_content_id = helper.make_request(
+                        api_key, workspace_id, canvas_content_endpoint, {}
+                    )
+
+                    if canvas_content:
+                        canvases.append(canvas_content)
+
+    return canvases, last_id
+
+
 def stream_events(inputs: smi.InputDefinition, event_writer: smi.EventWriter):
     for input_name, input_item in inputs.inputs.items():
         normalized_input_name = input_name.split("/")[-1]
@@ -64,50 +97,21 @@ def stream_events(inputs: smi.InputDefinition, event_writer: smi.EventWriter):
 
             if endpoint_arg == "canvases":
                 # Retrieve the list of users first and then the canvas content.
-                users, last_id = helper.make_request(
-                    api_key, workspace_id, USERS, params
-                )
+                canvases, last_id = get_canvases(helper, api_key, workspace_id, params)
 
-                if users:
-                    canvases = []
+                if canvases:
+                    for canvas in canvases:
+                        sourcetype = f"openai:compliance:{endpoint_arg}"
 
-                    for user in users:
-                        user_id = user["id"]
-                        user_canvases_endpoint = USER_CANVASES.format(user_id=user_id)
-
-                        # Get each canvas from each user
-                        user_canvases, last_user_canvas_id = helper.make_request(
-                            api_key, workspace_id, user_canvases_endpoint, {}
+                        event_writer.write_event(
+                            smi.Event(
+                                data=json.dumps(canvas),
+                                index=input_item.get("index"),
+                                sourcetype=sourcetype,
+                            )
                         )
 
-                        if user_canvases:
-                            for canvas in user_canvases:
-                                canvas_id = canvas["id"]
-                                canvas_content_endpoint = CANVAS_CONTENT.format(
-                                    user_id=user_id, textdoc_id=canvas_id
-                                )
-
-                                # Get the canvas content
-                                canvas_content, last_content_id = helper.make_request(
-                                    api_key, workspace_id, canvas_content_endpoint, {}
-                                )
-
-                                if canvas_content:
-                                    canvases.append(canvas_content)
-
-                        if canvases:
-                            for canvas in canvases:
-                                sourcetype = f"openai:compliance:{endpoint_arg}"
-
-                                event_writer.write_event(
-                                    smi.Event(
-                                        data=json.dumps(canvas),
-                                        index=input_item.get("index"),
-                                        sourcetype=sourcetype,
-                                    )
-                                )
-
-                            checkpoint.update(checkpoint_name, last_id)
+                    checkpoint.update(checkpoint_name, last_id)
                 else:
                     logger.info(f"No users were found for workspace {workspace_id}")
                     return
@@ -193,12 +197,12 @@ def stream_events(inputs: smi.InputDefinition, event_writer: smi.EventWriter):
                                 )
                             )
 
-                    if not is_checkpoint_saved and endpoint_arg != "conversations":
-                        # For all other endpoints use last_id as checkpoint
-                        checkpoint.update(checkpoint_name, last_id)
-                        logger.info(f"Checkpoint updated with last_id: {last_id}")
-
                     if endpoint_arg != "conversations":
+                        if not is_checkpoint_saved:
+                            # For all other endpoints use last_id as checkpoint
+                            checkpoint.update(checkpoint_name, last_id)
+                            logger.info(f"Checkpoint updated with last_id: {last_id}")
+
                         logger.info(
                             f"Execution completed. A total of {len(data)} new events were ingested."
                         )
