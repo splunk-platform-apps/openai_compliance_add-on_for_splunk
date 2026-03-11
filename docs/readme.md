@@ -11,7 +11,7 @@ This project involves the development of a custom add-on designed to automate th
 
 ### Installation
 
-#### Installation Steps for `Splunk Enterprise`
+#### Steps for `Splunk Enterprise`
 - Please follow the steps [here](https://docs.splunk.com/Documentation/AddOns/released/Overview/Singleserverinstall) to install the Add-on in a single-instance Splunk Enterprise deployment.
 
 - Please follow the steps [here](https://docs.splunk.com/Documentation/AddOns/released/Overview/Distributedinstall) to install the Add-on in a distributed Splunk Enterprise deployment.
