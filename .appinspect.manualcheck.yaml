@@ -10,3 +10,5 @@ check_for_supported_tls:
   comment: 'Ok'
 check_all_python_files_are_well_formed:
   comment: 'Ok'
+check_python_untrusted_xml_functions:
+  comment: 'Ok'
