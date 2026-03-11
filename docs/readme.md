@@ -6,17 +6,20 @@ This project involves the development of a custom add-on designed to automate th
 > This add-on ingests data from an enterprise ChatGPT workspace using the OpenAI Compliance API.
 
 ### Requirements
+
 - The OpenAI Compliance API is only available for **enterprise** administrators, so you must have an enterprise account to be able to enable it.
 - Authentication is handled via an **API key**. The organization administrator must generate a new key for the corresponding workspace. Please refer to the official OpenAI Compliance API documentation, as additional steps may be required to grant full API access to the key.
+
+Review the OpenAI Compliance API documentation for more details on this [page](https://chatgpt.com/admin/api-reference).
 
 ### Installation
 
 #### Steps for `Splunk Enterprise`
-- Please follow the steps [here](https://docs.splunk.com/Documentation/AddOns/released/Overview/Singleserverinstall) to install the Add-on in a single-instance Splunk Enterprise deployment.
+- Please follow the steps [here](https://docs.splunk.com/Documentation/AddOns/released/Overview/Singleserverinstall) to install the Add-on in a **single-instance** Splunk Enterprise deployment.
 
-- Please follow the steps [here](https://docs.splunk.com/Documentation/AddOns/released/Overview/Distributedinstall) to install the Add-on in a distributed Splunk Enterprise deployment.
+- Please follow the steps [here](https://docs.splunk.com/Documentation/AddOns/released/Overview/Distributedinstall) to install the Add-on in a **distributed** Splunk Enterprise deployment.
 
-#### Installation Steps for `Splunk Cloud`
+#### Steps for `Splunk Cloud`
 - Please follow the steps [here](https://docs.splunk.com/Documentation/AddOns/released/Overview/SplunkCloudinstall) to install the Add-on in Splunk Cloud.
 
 ### Configuration
@@ -38,13 +41,13 @@ This add-on has two inputs, the usage and configuration is described in the step
 
 This input can fetch data from: Canvases, Conversations, GPTs, Projects, Users.
 
-#### Configuration
+To create such an input please follow instructions below:
 
 1. In the **Inputs** tab, select **Create New Input**.
 2. Choose **OpenAI Compliance Data Input**.
 3. Enter the information in the related fields using the following input parameters table.
 
-#### Input Parameters
+##### Input Parameters
 
 Input name                |Corresponding field in Splunk Web | Description|
 |-------------------------|----------------------------------|------------|
@@ -55,7 +58,7 @@ Input name                |Corresponding field in Splunk Web | Description|
 |`endpoint`               |Endpoint                          |The endpoint where you want to get data from. Available options: Canvases, Conversations, GPTs, Projects, Users.
 |`start_time`             |From                              |The start date for data ingestion in the format: YYYY-MM-DDTHH:MM:SSZ (e.g., `2025-08-01T00:00:00Z`). This field is only supported and required by the conversations endpoint.|
 
-#### Sourcetypes
+##### Sourcetypes
 
 ---------------------------------------------------------
 |      Endpoint      |            Sourcetype            |
@@ -70,13 +73,13 @@ Users                | openai:compliance:users          |
 
 This input gets the content of log files for the following event types: AUDIT_LOG, APP_LOG, APP_AUTH_LOG, CODEX_LOG.
 
-#### Configuration
+To create such an input please follow instructions below:
 
 1. In the **Inputs** tab, select **Create New Input**.
 2. Choose **OpenAI Compliance Logs Input**.
 3. Enter the information in the related fields using the following input parameters table.
 
-#### Input Parameters 
+##### Input Parameters 
 
 Input name                |Corresponding field in Splunk Web | Description|
 |-------------------------|----------------------------------|------------|
@@ -87,7 +90,7 @@ Input name                |Corresponding field in Splunk Web | Description|
 |`event_type`             |Event Type                        |Required. The log category. You can select multiple event types. Available options: AUDIT_LOG, APP_LOG, APP_AUTH_LOG, CODEX_LOG.
 |`start_time`             |From                              |Required. The start date for data ingestion in the format: YYYY-MM-DDTHH:MM:SSZ (e.g., `2025-08-01T00:00:00Z`).|
 
-#### Sourcetypes
+##### Sourcetypes
 
 ---------------------------------------------------------
 |      Event Type      |          Sourcetype             |
@@ -110,11 +113,11 @@ The API key and Workspace id are correct, but still not events?
 
 Tested for installation and basic ingestion on Splunk 10.x, 9.x and 8.2.
 
-> Built by [Splunk's FDSE Team (#team-fdse)]
 ## Credits & Acknowledgements
+> Built by [Splunk's FDSE Team (#team-fdse)]
 
-* Yuan Ling
-* Isaac Fonseca Monge
+* [Yuan Ling](https://github.com/lingy1028)
+* [Isaac Fonseca Monge](https://github.com/ifonsecam)
 * Sam Valley
 
 ## Contributing
