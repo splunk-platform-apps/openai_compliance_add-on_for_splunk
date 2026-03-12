@@ -25,13 +25,13 @@ Review the OpenAI Compliance API documentation for more details on this [page](h
 ### Configuration
 1. Open Splunk Web on the Heavy Forwarder (or IDM). Access the OpenAI Compliance Add-on for Splunk from the list of applications. 
 2. Select the `Configuration` tab on the top left corner.
-3. Press the `Account` button.
-4. Press the `Add` button on the top right to create a new account.
+3. Select `Account`.
+4. Select `Add` in the top-right corner to create a new account.
 5. Enter the following details in the dialog box:
     - **Account name**: Enter a unique name for this account.
     - **Workspace id**: Enter the workspace id where you want to get data from.
     - **API key**: The API key generated for your workspace.
-6. Press the `Add` button.
+6. Select `Add`.
 
 ### Usage
 
