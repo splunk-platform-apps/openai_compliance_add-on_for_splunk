@@ -1,6 +1,6 @@
 # OpenAI Compliance Add-on for Splunk
 
-This project involves the development of a custom add-on designed to automate the ingestion of audit and compliance logs from the OpenAI Compliance API into Splunk Enterprise or Splunk Cloud. The primary scope is to provide organizations with centralized visibility into OpenAI usage, enabling security auditing, policy enforcement, and regulatory compliance monitoring.
+This project involves the development of a Splunk add-on designed to automate the ingestion of OpenAI resource data and compliance logs from the OpenAI Compliance API into Splunk Enterprise or Splunk Cloud Platform. The primary objective is to provide organizations with centralized visibility into OpenAI through audit logging, policy enforcement, and regulatory compliance monitoring.
 
 ## Getting Started
 > This add-on ingests data from an enterprise ChatGPT workspace using the OpenAI Compliance API.
@@ -8,43 +8,43 @@ This project involves the development of a custom add-on designed to automate th
 ### Requirements
 
 - The OpenAI Compliance API is only available for **enterprise** administrators, so you must have an enterprise account to be able to enable it.
-- Authentication is handled via an **API key**. The organization administrator must generate a new key for the corresponding workspace. Please refer to the official OpenAI Compliance API documentation, as additional steps may be required to grant full API access to the key.
+- Authentication is handled through an **API key**. The organization administrator must generate a new key for the corresponding workspace. Refer to the official OpenAI Compliance API documentation, as additional steps might be required to grant full API access to the key.
 
 Review the OpenAI Compliance API documentation for more details on this [page](https://chatgpt.com/admin/api-reference).
 
 ### Installation
 
 #### Steps for `Splunk Enterprise`
-- Please follow the steps [here](https://docs.splunk.com/Documentation/AddOns/released/Overview/Singleserverinstall) to install the Add-on in a **single-instance** Splunk Enterprise deployment.
+- Follow the instructions [here](https://docs.splunk.com/Documentation/AddOns/released/Overview/Singleserverinstall) to install the Add-on in a **single-instance** Splunk Enterprise deployment.
 
-- Please follow the steps [here](https://docs.splunk.com/Documentation/AddOns/released/Overview/Distributedinstall) to install the Add-on in a **distributed** Splunk Enterprise deployment.
+- Follow the instructions [here](https://docs.splunk.com/Documentation/AddOns/released/Overview/Distributedinstall) to install the Add-on in a **distributed** Splunk Enterprise deployment.
 
-#### Steps for `Splunk Cloud`
-- Please follow the steps [here](https://docs.splunk.com/Documentation/AddOns/released/Overview/SplunkCloudinstall) to install the Add-on in Splunk Cloud.
+#### Steps for `Splunk Cloud Platform`
+- Follow the instructions [here](https://docs.splunk.com/Documentation/AddOns/released/Overview/SplunkCloudinstall) to install the Add-on in Splunk Cloud Platform.
 
 ### Configuration
-1. Open the Web UI for the Heavy Forwarder (or IDM). Access the OpenAI Compliance Add-on for Splunk from the list of applications. 
-2. Click on the `Configuration` tab on the top left corner.
-3. Click on the `Account` button.
-4. Click on the `Add` button on the top right to create a new account.
-5. Enter the following details in the pop-up box:
+1. Open Splunk Web on the Heavy Forwarder (or IDM). Access the OpenAI Compliance Add-on for Splunk from the list of applications. 
+2. Select the `Configuration` tab on the top left corner.
+3. Press the `Account` button.
+4. Press the `Add` button on the top right to create a new account.
+5. Enter the following details in the dialog box:
     - **Account name**: Enter a unique name for this account.
     - **Workspace id**: Enter the workspace id where you want to get data from.
     - **API key**: The API key generated for your workspace.
-6. Click on the `Add` button.
+6. Press the `Add` button.
 
 ### Usage
 
-This add-on has two inputs, the usage and configuration is described in the steps below.
+This add-on includes 2 inputs. Usage and configuration are described in the following steps.
 
 #### OpenAI Compliance Data Input
 
-This input can fetch data from: Canvases, Conversations, GPTs, Projects, Users.
+This input can retrieve data from: Canvases, Conversations, GPTs, Projects, Users.
 
-To create such an input please follow instructions below:
+To create such an input, follow these instructions:
 
 1. In the **Inputs** tab, select **Create New Input**.
-2. Choose **OpenAI Compliance Data Input**.
+2. Select **OpenAI Compliance Data Input**.
 3. Enter the information in the related fields using the following input parameters table.
 
 ##### Input Parameters
@@ -53,10 +53,10 @@ Input name                |Corresponding field in Splunk Web | Description|
 |-------------------------|----------------------------------|------------|
 |`name`                   |Name                              |A unique name for your input.|
 |`interval`               |Interval                          |Time interval of input in seconds.|
-|`index`                  |Index                             |The index in which the data should be stored. The default is <code>default</code>.|
+|`index`                  |Index                             |The index in which the data will be stored. The default is <code>default</code>.|
 |`account`                |Account to use                    |The account created in the Configuration tab.|
 |`endpoint`               |Endpoint                          |The endpoint where you want to get data from. Available options: Canvases, Conversations, GPTs, Projects, Users.
-|`start_time`             |From                              |The start date for data ingestion in the format: YYYY-MM-DDTHH:MM:SSZ (e.g., `2025-08-01T00:00:00Z`). This field is only supported and required by the conversations endpoint.|
+|`start_time`             |From                              |The start date for data ingestion in the format: YYYY-MM-DDTHH:MM:SSZ (for example, `2025-08-01T00:00:00Z`). This field is only supported and required by the conversations endpoint.|
 
 ##### Sourcetypes
 
@@ -73,10 +73,10 @@ Users                | openai:compliance:users          |
 
 This input gets the content of log files for the following event types: AUDIT_LOG, APP_LOG, APP_AUTH_LOG, CODEX_LOG.
 
-To create such an input please follow instructions below:
+To create such an input, follow these instructions:
 
 1. In the **Inputs** tab, select **Create New Input**.
-2. Choose **OpenAI Compliance Logs Input**.
+2. Select **OpenAI Compliance Logs Input**.
 3. Enter the information in the related fields using the following input parameters table.
 
 ##### Input Parameters 
@@ -85,10 +85,10 @@ Input name                |Corresponding field in Splunk Web | Description|
 |-------------------------|----------------------------------|------------|
 |`name`                   |Name                              |A unique name for your input.|
 |`interval`               |Interval                          |Time interval of input in seconds.|
-|`index`                  |Index                             |The index in which the data should be stored. The default is <code>default</code>.|
+|`index`                  |Index                             |The index in which the data will be stored. The default is <code>default</code>.|
 |`account`                |Account to use                    |The account created in the Configuration tab.|
 |`event_type`             |Event Type                        |Required. The log category. You can select multiple event types. Available options: AUDIT_LOG, APP_LOG, APP_AUTH_LOG, CODEX_LOG.
-|`start_time`             |From                              |Required. The start date for data ingestion in the format: YYYY-MM-DDTHH:MM:SSZ (e.g., `2025-08-01T00:00:00Z`).|
+|`start_time`             |From                              |Required. The start date for data ingestion in the format: YYYY-MM-DDTHH:MM:SSZ (for example, `2025-08-01T00:00:00Z`).|
 
 ##### Sourcetypes
 
@@ -103,7 +103,7 @@ CODEX_LOG              | openai:compliance:codex_log     |
 ## Troubleshooting
 
 Are you not seeing any events in Splunk? 
-- Verify that you have an API key with the right permissions to access compliance data for the specified workspace.
+- Verify that you have an API key with the required permissions to access compliance data for the specified workspace.
 
 The API key and Workspace id are correct, but still not events?
 - Check Splunk internal logs for error details:
