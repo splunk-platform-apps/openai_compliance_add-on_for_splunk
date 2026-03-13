@@ -9,13 +9,13 @@
         },
         "author": [
             {
-                "name": "",
-                "email": null,
-                "company": null
+                "name": "FDSE",
+                "email": "fdse@splunk.com",
+                "company": "Splunk"
             }
         ],
         "releaseDate": null,
-        "description": "OpenAI Compliance Add-on for Splunk",
+        "description": "This add-on ingests data from an enterprise ChatGPT workspace using the OpenAI Compliance API.",
         "classification": {
             "intendedAudience": "IT Professionals",
             "categories": [
@@ -25,9 +25,9 @@
         },
         "commonInformationModels": null,
         "license": {
-            "name": "LICENSE.txt",
-            "text": "./LICENSES/LICENSE.txt",
-            "uri": null
+            "name": "LICENSE",
+            "text": "LICENSE",
+            "uri": "https://github.com/splunk-platform-apps/openai_compliance_add-on_for_splunk/blob/main/LICENSE"
         },
         "privacyPolicy": {
             "name": null,
@@ -35,9 +35,9 @@
             "uri": null
         },
         "releaseNotes": {
-            "name": "README",
-            "text": "README.txt",
-            "uri": ""
+            "name": "CHANGELOG.md",
+            "text": "CHANGELOG.md",
+            "uri": "https://github.com/splunk-platform-apps/openai_compliance_add-on_for_splunk/blob/main/CHANGELOG.md"
         }
     },
     "dependencies": null,
