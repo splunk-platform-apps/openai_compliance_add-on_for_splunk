@@ -23,6 +23,9 @@ Review the OpenAI Compliance API documentation for more details on this [page](h
 - Follow the instructions [here](https://docs.splunk.com/Documentation/AddOns/released/Overview/SplunkCloudinstall) to install the Add-on in Splunk Cloud Platform.
 
 ### Configuration
+
+The **configuration** page is available to all users. To create a new account, follow these steps:
+
 1. Open Splunk Web on the Heavy Forwarder (or IDM). Access the OpenAI Compliance Add-on for Splunk from the list of applications. 
 2. Select the `Configuration` tab on the top left corner.
 3. Select `Account`.
