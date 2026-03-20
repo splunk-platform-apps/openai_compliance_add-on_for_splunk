@@ -18,6 +18,47 @@ def validate_input(definition: smi.ValidationDefinition):
     return
 
 
+def get_conversations(data, checkpoint_value):
+    conversations = []
+
+    for event in data:
+        messages = event.get("messages")
+
+        if messages:
+            messages_list = messages.get("data")
+
+            for message in messages_list:
+                content = message["content"]
+                created_at = message["created_at"]
+
+                # skip the message if it has no content or creation time
+                if not content or not created_at:
+                    continue
+
+                # ignore the message if it was created before the previous run
+                if created_at < checkpoint_value:
+                    continue
+
+                new_event = {
+                    "object": event.get("object", ""),
+                    "id": event.get("id", ""),
+                    "workspace_id": event.get("workspace_id", ""),
+                    "user_id": event.get("user_id", ""),
+                    "user_email": event.get("user_email", ""),
+                    "created_at": created_at,
+                    "last_active_at": event.get("last_active_at", ""),
+                    "title": event.get("title", ""),
+                    "messages": {
+                        "author": message.get("author", {}),
+                        "content": content,
+                    },
+                    "files": message.get("files", {}),
+                }
+
+                conversations.append(new_event)
+    return conversations
+
+
 def get_canvases(helper, api_key, workspace_id, params):
     users, last_id = helper.make_request(api_key, workspace_id, USERS, params)
 
@@ -129,66 +170,34 @@ def stream_events(inputs: smi.InputDefinition, event_writer: smi.EventWriter):
 
                 if data:
                     sourcetype = f"openai:compliance:{endpoint_arg}"
-                    count = 0
+                    event_count = 0
 
-                    for event in data:
-                        if endpoint_arg == "conversations":
-                            messages = event.get("messages")
+                    if endpoint_arg == "conversations":
+                        conversations = get_conversations(data, checkpoint_value)
 
-                            if messages:
-                                messages_list = messages.get("data")
+                        for conversation_event in conversations:
+                            event_writer.write_event(
+                                smi.Event(
+                                    data=json.dumps(conversation_event),
+                                    index=input_item.get("index"),
+                                    sourcetype=sourcetype,
+                                )
+                            )
 
-                                for message in messages_list:
-                                    content = message["content"]
-                                    created_at = message["created_at"]
+                            event_count += 1
 
-                                    # skip the message if it has no content or creation time
-                                    if not content or not created_at:
-                                        continue
+                            current_ts = int(datetime.now().timestamp())
 
-                                    # ignore the message if it was created before the previous run
-                                    if created_at < checkpoint_value:
-                                        continue
+                            # save run time checkpoint after each event is saved
+                            checkpoint.update(checkpoint_name, current_ts)
 
-                                    new_event = {
-                                        "object": event.get("object", ""),
-                                        "id": event.get("id", ""),
-                                        "workspace_id": event.get("workspace_id", ""),
-                                        "user_id": event.get("user_id", ""),
-                                        "user_email": event.get("user_email", ""),
-                                        "created_at": created_at,
-                                        "last_active_at": event.get(
-                                            "last_active_at", ""
-                                        ),
-                                        "title": event.get("title", ""),
-                                        "messages": {
-                                            "author": message.get("author", {}),
-                                            "content": content,
-                                        },
-                                        "files": message.get("files", {}),
-                                    }
+                            is_checkpoint_saved = True
 
-                                    event_writer.write_event(
-                                        smi.Event(
-                                            data=json.dumps(new_event),
-                                            index=input_item.get("index"),
-                                            sourcetype=sourcetype,
-                                        )
-                                    )
-
-                                    count += 1
-
-                                    current_ts = int(datetime.now().timestamp())
-
-                                    # save run time checkpoint after each event is saved
-                                    checkpoint.update(checkpoint_name, current_ts)
-
-                                    is_checkpoint_saved = True
-
-                                    logger.debug(
-                                        f"Last timestamp saved as checkpoint: {current_ts}"
-                                    )
-                        else:
+                            logger.debug(
+                                f"Last timestamp saved as checkpoint: {current_ts}"
+                            )
+                    else:
+                        for event in data:
                             event_writer.write_event(
                                 smi.Event(
                                     data=json.dumps(event),
@@ -197,19 +206,17 @@ def stream_events(inputs: smi.InputDefinition, event_writer: smi.EventWriter):
                                 )
                             )
 
+                            event_count += 1
+
                     if endpoint_arg != "conversations":
                         if not is_checkpoint_saved:
                             # For all other endpoints use last_id as checkpoint
                             checkpoint.update(checkpoint_name, last_id)
                             logger.info(f"Checkpoint updated with last_id: {last_id}")
 
-                        logger.info(
-                            f"Execution completed. A total of {len(data)} new events were ingested."
-                        )
-                    else:
-                        logger.info(
-                            f"Execution completed. A total of {count} new events were ingested."
-                        )
+                    logger.info(
+                        f"Execution completed. A total of {event_count} new events were ingested."
+                    )
         except Exception as e:
             logger.error(
                 f"An error has ocurred in stream_events: {e}.  Traceback: {traceback.format_exc()}"
