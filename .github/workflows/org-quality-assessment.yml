@@ -15,6 +15,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   call-workflow:
     uses: splunk-platform-apps/.github/.github/workflows/reusable-quality-assessment.yml@1
