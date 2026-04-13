@@ -12,3 +12,5 @@ check_all_python_files_are_well_formed:
   comment: 'Ok'
 check_python_untrusted_xml_functions:
   comment: 'Ok'
+check_for_binary_files_without_source_code:
+  comment: 'Ok'
