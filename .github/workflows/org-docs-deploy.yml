@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - 'docs/**'
-      - 'docusaurus.*'
+      - 'website/docusaurus.*'
 
 # Allow only 1 concurrent execution
 concurrency:
