@@ -16,6 +16,5 @@
 # Make CI/CD org pipelines changes require admin approval
 /.github/workflows/org-*.yml @splunk-platform-apps/admins
 
-# Make docusaurus deps changes require admin approval
-/src/ @splunk-platform-apps/admins
-/static/ @splunk-platform-apps/admins
+# Make docusaurus changes require admin approval
+/website/docusaurus.config.ts @splunk-platform-apps/admins

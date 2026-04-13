@@ -4,7 +4,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
-const app_name: string = 'openai_compliance_add-on_for_splunk';
+const app_name: string = 'openai_compliance_add-on_for_splunk'.replaceAll("_", " ");
 const repo_name: string = 'openai_compliance_add-on_for_splunk';
 const app_descr: string = 'This add-on retrieves compliance data from a ChatGPT Enterprise workspace via the OpenAI API.';
 
