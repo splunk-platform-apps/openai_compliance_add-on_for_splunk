@@ -3,6 +3,7 @@
 Essential links for the project:
 
 :books: [Documentation](https://splunk-platform-apps.github.io/openai_compliance_add-on_for_splunk/)<br/>
+:gear: [Development Guidelines](https://github.com/splunk-platform-apps/.github/blob/main/documentation/DEV_GUIDELINES.md#getting-started)<br/>
 :writing_hand: [Release Notes](./CHANGELOG.md)<br/>
 :heart_on_fire: [Contributing Guidelines](https://github.com/splunk-platform-apps/.github/blob/main/.github/CONTRIBUTING.md)<br/>
 :balance_scale: [License](./LICENSE)
