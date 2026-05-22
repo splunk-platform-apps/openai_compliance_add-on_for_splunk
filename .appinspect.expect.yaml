@@ -1,2 +1,2 @@
 check_all_python_files_are_well_formed:
-  comment: 'Ok'
+  comment: 'ADDON-123 Ok'
