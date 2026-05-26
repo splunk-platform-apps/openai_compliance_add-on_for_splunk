@@ -4,7 +4,7 @@
 
 To install and run this app, download the latest compiled application directly from the releases page.
 
-:package: [Download the latest release here](https://splunk-platform-apps.github.io/openai_compliance_add-on_for_splunk/releases)
+:package: [Download the latest release here](https://github.com/splunk-platform-apps/openai_compliance_add-on_for_splunk/releases)
 
 Once downloaded, installation instructions can be found in the provided [documentation](https://splunk-platform-apps.github.io/openai_compliance_add-on_for_splunk)
 
