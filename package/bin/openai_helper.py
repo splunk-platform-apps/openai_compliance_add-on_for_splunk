@@ -3,8 +3,7 @@ import logging
 
 from solnlib import conf_manager, log
 from solnlib.modular_input import checkpointer
-from datetime import datetime, timezone
-from openai_consts import ADDON_NAME, OPENAI_COMPLIANCE_API_BASE_URL
+from openai_consts import ADDON_NAME, GET_FILE_CONTENT, OPENAI_COMPLIANCE_API_BASE_URL
 
 
 def set_logger(input_name: str, session_key: str) -> logging.Logger:
@@ -61,14 +60,8 @@ class OpenAIHelper:
         if last_record_checkpoint_value is not None:
             checkpoint_value = last_record_checkpoint_value
         else:
-            # During the first run of the input only the conversations and logs endpoints requires a start_time param, the rest of the endpoints don't need it.
-            if endpoint == "conversations":
-                checkpoint_value = (
-                    datetime.strptime(start_time_arg, "%Y-%m-%dT%H:%M:%SZ")
-                    .replace(tzinfo=timezone.utc)
-                    .timestamp()
-                )
-            if endpoint == "logs":
+            # During the first run of the input only the conversations and logs endpoints requires a start_time param, the rest of the endpoints don't need it
+            if endpoint == "logs" or endpoint == "conversations":
                 checkpoint_value = start_time_arg
 
         return checkpoint_value
@@ -83,6 +76,8 @@ class OpenAIHelper:
                 + "/"
                 + endpoint
             )
+
+            self.logger.debug(f"URL: {URL}")
 
             headers = {
                 "Authorization": f"Bearer {api_key}",
@@ -106,8 +101,6 @@ class OpenAIHelper:
                 last_index = result.get("last_id") or result.get("last_end_time")
 
                 if has_more and last_index:
-                    # Remove 'since_timestamp' if present to avoid errors
-                    params.pop("since_timestamp", None)
                     # Update params to fetch next page
                     params["after"] = last_index
                 else:
@@ -115,6 +108,46 @@ class OpenAIHelper:
 
             return compliance_data, last_index
 
+        except requests.RequestException as e:
+            self.logger.error(f"Request failed: {e}")
+            raise
+        except Exception as e:
+            self.logger.error(f"Unexpected error: {e}")
+            raise
+
+    def get_log_files_content(self, api_key, workspace_id, log_files):
+        result = []
+
+        try:
+            for log_file in log_files:
+                log_file_id = log_file.get("id")
+
+                if not log_file_id:
+                    continue
+
+                url = (
+                    OPENAI_COMPLIANCE_API_BASE_URL.format(workspace_id=workspace_id)
+                    + "/"
+                    + GET_FILE_CONTENT.format(log_file_id=log_file_id)
+                )
+
+                headers = {
+                    "Authorization": f"Bearer {api_key}",
+                    "Content-Type": "application/json",
+                }
+
+                response = requests.get(url, headers=headers)
+
+                self.logger.debug(f"response from request: {response}")
+
+                response.raise_for_status()
+
+                file_content = response.text
+
+                events = file_content.splitlines()
+
+                result.extend(events)
+            return result
         except requests.RequestException as e:
             self.logger.error(f"Request failed: {e}")
             raise
