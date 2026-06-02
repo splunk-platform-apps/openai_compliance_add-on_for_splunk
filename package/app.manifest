@@ -5,7 +5,7 @@
         "id": {
             "group": null,
             "name": "openai_compliance_addon_for_splunk",
-            "version": "1.0.0"
+            "version": "1.0.1"
         },
         "author": [
             {
@@ -26,7 +26,7 @@
         "commonInformationModels": null,
         "license": {
             "name": "LICENSE",
-            "text": "LICENSE",
+            "text": null,
             "uri": "https://github.com/splunk-platform-apps/openai_compliance_add-on_for_splunk/blob/main/LICENSE"
         },
         "privacyPolicy": {
@@ -36,7 +36,7 @@
         },
         "releaseNotes": {
             "name": "CHANGELOG.md",
-            "text": "CHANGELOG.md",
+            "text": null,
             "uri": "https://github.com/splunk-platform-apps/openai_compliance_add-on_for_splunk/blob/main/CHANGELOG.md"
         }
     },

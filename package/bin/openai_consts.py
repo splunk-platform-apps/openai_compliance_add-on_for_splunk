@@ -2,7 +2,6 @@ ADDON_NAME = "openai_compliance_addon_for_splunk"
 OPENAI_COMPLIANCE_API_BASE_URL = (
     "https://api.chatgpt.com/v1/compliance/workspaces/{workspace_id}"
 )
-CONVERSATIONS = "/conversations"
 USERS = "users"
 PROJECTS = "projects"
 GPTS = "gpts"
