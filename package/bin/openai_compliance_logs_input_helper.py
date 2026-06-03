@@ -1,6 +1,5 @@
 import json
 from splunklib import modularinput as smi
-
 from openai_helper import OpenAIHelper
 from openai_consts import LIST_FILES
 

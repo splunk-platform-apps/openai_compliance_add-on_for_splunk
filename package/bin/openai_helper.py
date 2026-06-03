@@ -61,7 +61,7 @@ class OpenAIHelper:
             checkpoint_value = last_record_checkpoint_value
         else:
             # During the first run of the input only the conversations and logs endpoints requires a start_time param, the rest of the endpoints don't need it
-            if endpoint == "logs" or endpoint == "conversations":
+            if endpoint == "logs":
                 checkpoint_value = start_time_arg
 
         return checkpoint_value

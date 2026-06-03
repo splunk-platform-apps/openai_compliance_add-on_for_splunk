@@ -6,8 +6,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [v1.0.1] - 2026-05-28
 
-### Fixed
-- Updated the conversations endpoint to the latest version.
+### Added
+- New log event type option **CONVERSATION_MESSAGE** for the Compliance Logs Input. Note: If you are upgrading from a previous version, you must create new log inputs to retrieve conversations.
+
+### Removed
+- Conversations option from the Compliance Data Input.
 
 ## [v1.0.0] - 2026-03-09
 

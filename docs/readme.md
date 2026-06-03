@@ -42,7 +42,7 @@ This add-on includes 2 inputs. Usage and configuration are described in the foll
 
 #### OpenAI Compliance Data Input
 
-This input can retrieve data from: Canvases, Conversations, GPTs, Projects, Users.
+This input can retrieve data from: Canvases, GPTs, Projects, Users.
 
 To create such an input, follow these instructions:
 
@@ -58,8 +58,7 @@ Input name                |Corresponding field in Splunk Web | Description|
 |`interval`               |Interval                          |Time interval of input in seconds.|
 |`index`                  |Index                             |The index in which the data will be stored. The default is <code>default</code>.|
 |`account`                |Account to use                    |The account created in the Configuration tab.|
-|`endpoint`               |Endpoint                          |The endpoint where you want to get data from. Available options: Canvases, Conversations, GPTs, Projects, Users.
-|`start_time`             |From                              |The start date for data ingestion in the format: YYYY-MM-DDTHH:MM:SSZ (for example, `2025-08-01T00:00:00Z`). This field is only supported and required by the conversations endpoint.|
+|`endpoint`               |Endpoint                          |The endpoint where you want to get data from. Available options: Canvases, GPTs, Projects, Users.
 
 ##### Sourcetypes
 
@@ -67,14 +66,13 @@ Input name                |Corresponding field in Splunk Web | Description|
 |      Endpoint      |            Sourcetype            |
 ---------------------|----------------------------------|
 Canvases             | openai:compliance:canvases       |
-Conversations        | openai:compliance:conversations  |
 GPTS                 | openai:compliance:gpts           |
 Projects             | openai:compliance:projects       |
 Users                | openai:compliance:users          |
 
 #### OpenAI Compliance Logs Input
 
-This input gets the content of log files for the following event types: AUDIT_LOG, APP_LOG, APP_AUTH_LOG, CODEX_LOG.
+This input gets the content of log files for the following event types: AUDIT_LOG, APP_LOG, APP_AUTH_LOG, CODEX_LOG and CONVERSATION_MESSAGE.
 
 To create such an input, follow these instructions:
 
@@ -90,18 +88,19 @@ Input name                |Corresponding field in Splunk Web | Description|
 |`interval`               |Interval                          |Time interval of input in seconds.|
 |`index`                  |Index                             |The index in which the data will be stored. The default is <code>default</code>.|
 |`account`                |Account to use                    |The account created in the Configuration tab.|
-|`event_type`             |Event Type                        |Required. The log category. You can select multiple event types. Available options: AUDIT_LOG, APP_LOG, APP_AUTH_LOG, CODEX_LOG.
+|`event_type`             |Event Type                        |Required. The log category. You can select multiple event types. Available options: AUDIT_LOG, APP_LOG, APP_AUTH_LOG, CODEX_LOG and CONVERSATION_MESSAGE.
 |`start_time`             |From                              |Required. The start date for data ingestion in the format: YYYY-MM-DDTHH:MM:SSZ (for example, `2025-08-01T00:00:00Z`).|
 
 ##### Sourcetypes
 
----------------------------------------------------------
-|      Event Type      |          Sourcetype             |
------------------------|---------------------------------|
-AUDIT_LOG              | openai:compliance:audit_log     |
-APP_LOG                | openai:compliance:app_log       |
-APP_LOG_AUTH           | openai:compliance:app_log_auth  |
-CODEX_LOG              | openai:compliance:codex_log     |
+--------------------------------------------------------------------
+|      Event Type      |          Sourcetype                        |
+-----------------------|--------------------------------------------|
+AUDIT_LOG              | openai:compliance:audit_log                |
+APP_LOG                | openai:compliance:app_log                  |
+APP_LOG_AUTH           | openai:compliance:app_log_auth             |
+CODEX_LOG              | openai:compliance:codex_log                |
+CONVERSATION_MESSAGE   | openai:compliance:conversation_message     |
 
 ## Troubleshooting
 
