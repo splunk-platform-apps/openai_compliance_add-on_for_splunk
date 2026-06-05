@@ -132,10 +132,6 @@
                                         "label": "Canvases"
                                     },
                                     {
-                                        "value": "conversations",
-                                        "label": "Conversations"
-                                    },
-                                    {
                                         "value": "gpts",
                                         "label": "GPTs"
                                     },
@@ -149,20 +145,6 @@
                                     }
                                 ]
                             }
-                        },
-                        {
-                            "type": "text",
-                            "label": "From",
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$",
-                                    "errorMsg": "Start date must be in the format YYYY-MM-DDTHH:MM:SSZ (example: 2025-01-01T00:00:00Z)"
-                                }
-                            ],
-                            "field": "start_time",
-                            "help": "Enter the start date for data ingestion in the format: YYYY-MM-DDTHH:MM:SSZ (e.g., 2025-08-01T00:00:00Z). This field is only supported by the conversations endpoint.",
-                            "required": false
                         }
                     ],
                     "inputHelperModule": "openai_compliance_data_input_helper",
@@ -218,7 +200,7 @@
                             "type": "multipleSelect",
                             "field": "event_type",
                             "label": "Event Type",
-                            "help": "Compliance log categories. Please select One or more compliance log categories from the list",
+                            "help": "Compliance log categories. Please select one or more compliance log categories from the list.",
                             "required": true,
                             "options": {
                                 "delimiter": ",",
@@ -238,6 +220,10 @@
                                     {
                                         "value": "CODEX_LOG",
                                         "label": "CODEX_LOG"
+                                    },
+                                    {
+                                        "value": "CONVERSATION_MESSAGE",
+                                        "label": "CONVERSATION_MESSAGE"
                                     }
                                 ]
                             }
@@ -315,7 +301,7 @@
     "meta": {
         "name": "openai_compliance_addon_for_splunk",
         "restRoot": "openai_compliance_addon_for_splunk",
-        "version": "1.0.1",
+        "version": "1.1.0",
         "displayName": "OpenAI Compliance Add-on for Splunk",
         "schemaVersion": "0.0.10",
         "supportedThemes": [

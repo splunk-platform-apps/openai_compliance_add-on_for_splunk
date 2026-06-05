@@ -1,6 +1,5 @@
 import json
 from splunklib import modularinput as smi
-
 from openai_helper import OpenAIHelper
 from openai_consts import LIST_FILES
 
@@ -77,11 +76,14 @@ def stream_events(inputs: smi.InputDefinition, event_writer: smi.EventWriter):
 
                 logger.debug(f"Sourcetype: {sourcetype}")
 
+                timestamp = event.get("timestamp")
+
                 event_writer.write_event(
                     smi.Event(
                         data=json.dumps(event),
                         index=input_item.get("index"),
                         sourcetype=sourcetype,
+                        time=timestamp,
                     )
                 )
 
