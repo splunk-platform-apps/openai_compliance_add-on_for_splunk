@@ -20,4 +20,4 @@ permissions:
 
 jobs:
   call-workflow:
-    uses: splunk-platform-apps/.github/.github/workflows/reusable-docs-deploy.yml@1
+    uses: splunk-platform-apps/.github/.github/workflows/reusable-docs-deploy.yml@v1
