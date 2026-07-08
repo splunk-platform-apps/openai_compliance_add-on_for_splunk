@@ -96,7 +96,6 @@ const config: Config = {
       },
       links: [
         {
-          title: 'Community',
           items: [
             {
               label: 'Community Slack',
@@ -116,7 +115,6 @@ const config: Config = {
           ],
         },
         {
-          title: 'More',
           items: [
             { label: 'Legal', href: 'https://www.splunk.com/en_us/legal.html', className: 'footer-row-secondary' },
             { label: 'Patents', href: 'https://www.splunk.com/en_us/legal/patents.html', className: 'footer-row-secondary' },
