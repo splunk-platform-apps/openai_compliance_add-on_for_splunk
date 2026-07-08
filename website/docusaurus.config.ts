@@ -53,18 +53,30 @@ const config: Config = {
   themeConfig: {
     image: 'img/docs-readme-template.png',
     navbar: {
+      title: 'Documentation',
       logo: {
         alt: 'Splunk Logo',
         src: 'img/logo.svg',
-        href: 'https://dev.splunk.com/',
         srcDark: 'img/logo-dark.svg',
       },
       items: [
         {
+          to: '/',
+          label: 'Home',
+          position: 'left',
+          activeBaseRegex: '^/' + repo_name + '/?$',
+        },
+        {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
-          label: 'Documentation',
+          label: 'Docs',
+        },
+        {
+          href: 'https://github.com/splunk-platform-apps/' + repo_name + '/issues',
+          position: 'left',
+          label: 'Known Issues',
+          'aria-label': 'Known Issues',
         },
         {
           href: 'https://github.com/splunk-platform-apps/' + repo_name,
@@ -76,43 +88,43 @@ const config: Config = {
     },
     footer: {
       style: 'dark',
+      logo: {
+        srcDark: 'img/devrel-logo-dark.png',
+        src: 'img/devrel-logo-light.png',
+        alt: 'Splunk DevRel logo',
+        height: 32
+      },
       links: [
-        {
-          title: 'Docs',
-          items: [
-            {
-              label: 'Documentation',
-              to: 'docs',
-            },
-          ],
-        },
         {
           title: 'Community',
           items: [
             {
-              label: 'GitHub',
-              href: 'https://github.com/splunk-platform-apps',
+              label: 'Community Slack',
+              href: 'https://splunkcommunity.slack.com/archives/C04DC8JJ6',
+              className: 'footer-row-primary'
             },
             {
-              label: 'Community Slack',
-              href: 'https://splunkcommunity.slack.com/archives/C04DC8JJ6'
+              label: 'Splunk Dev',
+              href: 'https://dev.splunk.com/',
+              className: 'footer-row-primary'
             },
             {
               label: 'Contact',
-              href: 'mailto:devinfo@splunk.com'
+              href: 'mailto:devinfo@splunk.com',
+              className: 'footer-row-primary'
             }
           ],
         },
         {
           title: 'More',
           items: [
-            {label: 'Legal', href: 'https://www.splunk.com/en_us/legal.html'},
-            {label: 'Patents', href: 'https://www.splunk.com/en_us/legal/patents.html'},
-            {label: 'Privacy', href: 'https://www.splunk.com/en_us/legal/privacy-policy.html?301=/en_us/legal/privacy/privacy-policy.html'}
+            { label: 'Legal', href: 'https://www.splunk.com/en_us/legal.html', className: 'footer-row-secondary' },
+            { label: 'Patents', href: 'https://www.splunk.com/en_us/legal/patents.html', className: 'footer-row-secondary' },
+            { label: 'Privacy', href: 'https://www.splunk.com/en_us/legal/privacy-policy.html?301=/en_us/legal/privacy/privacy-policy.html', className: 'footer-row-secondary' }
           ],
         },
       ],
-      copyright: `© ${new Date().getFullYear()} Splunk LLC All rights reserved.`,
+      copyright: `© 2025 - ${new Date().getFullYear()} Splunk LLC All rights reserved.`,
     },
     prism: {
       theme: prismThemes.github,
