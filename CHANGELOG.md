@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.2.0] - 2026-05-28
+
+### Added
+- API base URL selection to account configuration to support FedRAMP environments.
+- New AUTH_LOG option for the Compliance Logs Input.
+- Automatic retry logic with exponential backoff for compliance log API requests.
+- Connect/read timeouts to all outbound HTTP requests.
+
 ## [v1.1.0] - 2026-05-28
 
 ### Added
