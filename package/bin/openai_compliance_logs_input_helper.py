@@ -34,7 +34,7 @@ def stream_events(inputs: smi.InputDefinition, event_writer: smi.EventWriter):
 
             checkpoint_name = f"{normalized_input_name}_checkpoint"
 
-            api_key, workspace_id = helper.get_account_data(
+            base_url, api_key, workspace_id = helper.get_account_data(
                 "openai_compliance_addon_for_splunk_account"
             )
 
@@ -50,7 +50,7 @@ def stream_events(inputs: smi.InputDefinition, event_writer: smi.EventWriter):
 
             # get the log files list
             log_files, last_end_time = helper.make_request(
-                api_key, workspace_id, endpoint_arg, params
+                base_url, api_key, workspace_id, endpoint_arg, params
             )
 
             if last_end_time is not None and "Z" in last_end_time:
@@ -60,7 +60,9 @@ def stream_events(inputs: smi.InputDefinition, event_writer: smi.EventWriter):
                 logger.info(f"No data found for {endpoint_arg} at this time.")
                 return
 
-            events = helper.get_log_files_content(api_key, workspace_id, log_files)
+            events = helper.get_log_files_content(
+                base_url, api_key, workspace_id, log_files
+            )
 
             count = 0
 
