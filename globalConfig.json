@@ -61,6 +61,27 @@
                                 }
                             ],
                             "encrypted": true
+                        },
+                        {
+                            "type": "singleSelect",
+                            "label": "Base URL",
+                            "field": "base_url",
+                            "help": "Select gov.api.openai.com for FedRAMP accounts or api.chatgpt.com for standard enterprise accounts. Alternatively, you can enter a custom host by typing it directly (e.g., my.test.api.com).",
+                            "required": true,
+                            "options": {
+                                "disableSearch": true,
+                                "createSearchChoice": true,
+                                "autoCompleteFields": [
+                                    {
+                                        "value": "api.chatgpt.com",
+                                        "label": "api.chatgpt.com"
+                                    },
+                                    {
+                                        "value": "gov.api.openai.com",
+                                        "label": "gov.api.openai.com"
+                                    }
+                                ]
+                            }
                         }
                     ],
                     "title": "Accounts"
@@ -218,6 +239,10 @@
                                         "label": "APP_AUTH_LOG"
                                     },
                                     {
+                                        "value": "AUTH_LOG",
+                                        "label": "AUTH_LOG"
+                                    },
+                                    {
                                         "value": "CODEX_LOG",
                                         "label": "CODEX_LOG"
                                     },
@@ -301,7 +326,7 @@
     "meta": {
         "name": "openai_compliance_addon_for_splunk",
         "restRoot": "openai_compliance_addon_for_splunk",
-        "version": "1.1.0",
+        "version": "1.2.0",
         "displayName": "OpenAI Compliance Add-on for Splunk",
         "schemaVersion": "0.0.10",
         "supportedThemes": [
