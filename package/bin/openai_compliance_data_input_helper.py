@@ -66,7 +66,7 @@ def stream_events(inputs: smi.InputDefinition, event_writer: smi.EventWriter):
 
             checkpoint_name = f"{normalized_input_name}_checkpoint"
 
-            api_key, workspace_id = helper.get_account_data(
+            base_url, api_key, workspace_id = helper.get_account_data(
                 "openai_compliance_addon_for_splunk_account"
             )
 
@@ -113,7 +113,7 @@ def stream_events(inputs: smi.InputDefinition, event_writer: smi.EventWriter):
             else:
                 # get the data
                 data, last_id = helper.make_request(
-                    api_key, workspace_id, endpoint_arg, params
+                    base_url, api_key, workspace_id, endpoint_arg, params
                 )
 
                 if not data:
