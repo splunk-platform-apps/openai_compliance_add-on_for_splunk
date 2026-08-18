@@ -1,13 +1,13 @@
 import json
 import traceback
-from splunklib import modularinput as smi
+
 from openai_consts import (
+    CANVAS_CONTENT,
     USER_CANVASES,
     USERS,
-    CANVAS_CONTENT,
 )
-
 from openai_helper import OpenAIHelper
+from splunklib import modularinput as smi
 
 
 def validate_input(definition: smi.ValidationDefinition):

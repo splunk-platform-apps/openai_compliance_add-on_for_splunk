@@ -1,7 +1,8 @@
 import json
-from splunklib import modularinput as smi
-from openai_helper import OpenAIHelper
+
 from openai_consts import LIST_FILES
+from openai_helper import OpenAIHelper
+from splunklib import modularinput as smi
 
 
 def validate_input(definition: smi.ValidationDefinition):
