@@ -1,13 +1,13 @@
 import json
 import traceback
-from splunklib import modularinput as smi
+
 from openai_consts import (
+    CANVAS_CONTENT,
     USER_CANVASES,
     USERS,
-    CANVAS_CONTENT,
 )
-
 from openai_helper import OpenAIHelper
+from splunklib import modularinput as smi
 
 
 def validate_input(definition: smi.ValidationDefinition):
@@ -25,7 +25,7 @@ def get_canvases(helper, api_key, workspace_id, params):
             user_canvases_endpoint = USER_CANVASES.format(user_id=user_id)
 
             # Get each canvas from each user
-            user_canvases, last_user_canvas_id = helper.make_request(
+            user_canvases, _ = helper.make_request(
                 api_key, workspace_id, user_canvases_endpoint, {}
             )
 
@@ -37,7 +37,7 @@ def get_canvases(helper, api_key, workspace_id, params):
                     )
 
                     # Get the canvas content
-                    canvas_content, last_content_id = helper.make_request(
+                    canvas_content, _ = helper.make_request(
                         api_key, workspace_id, canvas_content_endpoint, {}
                     )
 
@@ -137,7 +137,7 @@ def stream_events(inputs: smi.InputDefinition, event_writer: smi.EventWriter):
             logger.info(
                 f"Execution completed. A total of {event_count} new events were ingested."
             )
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             logger.error(
                 f"An error has ocurred in stream_events: {e}.  Traceback: {traceback.format_exc()}"
             )

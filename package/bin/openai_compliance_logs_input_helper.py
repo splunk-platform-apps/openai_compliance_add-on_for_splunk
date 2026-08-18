@@ -1,7 +1,8 @@
 import json
-from splunklib import modularinput as smi
-from openai_helper import OpenAIHelper
+
 from openai_consts import LIST_FILES
+from openai_helper import OpenAIHelper
+from splunklib import modularinput as smi
 
 
 def validate_input(definition: smi.ValidationDefinition):
@@ -98,5 +99,5 @@ def stream_events(inputs: smi.InputDefinition, event_writer: smi.EventWriter):
             logger.info(
                 f"Execution completed. A total of {count} new events were ingested."
             )
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             logger.error(f"An error has ocurred in stream_events - {e}")

@@ -1,11 +1,11 @@
-import requests
 import logging
 
+import requests
+from openai_consts import ADDON_NAME, GET_FILE_CONTENT, OPENAI_COMPLIANCE_API_BASE_URL
+from requests.adapters import HTTPAdapter
 from solnlib import conf_manager, log
 from solnlib.modular_input import checkpointer
-from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
-from openai_consts import ADDON_NAME, GET_FILE_CONTENT, OPENAI_COMPLIANCE_API_BASE_URL
 
 
 def set_logger(input_name: str, session_key: str) -> logging.Logger:
