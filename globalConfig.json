@@ -326,7 +326,7 @@
     "meta": {
         "name": "openai_compliance_addon_for_splunk",
         "restRoot": "openai_compliance_addon_for_splunk",
-        "version": "1.2.0",
+        "version": "1.3.0",
         "displayName": "OpenAI Compliance Add-on for Splunk",
         "schemaVersion": "0.0.10",
         "supportedThemes": [

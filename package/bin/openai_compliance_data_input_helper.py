@@ -8,14 +8,15 @@ from openai_consts import (
 )
 from openai_helper import OpenAIHelper
 from splunklib import modularinput as smi
+from utils import get_float_value
 
 
 def validate_input(definition: smi.ValidationDefinition):
     return
 
 
-def get_canvases(helper, api_key, workspace_id, params):
-    users, last_id = helper.make_request(api_key, workspace_id, USERS, params)
+def get_canvases(helper, base_url, api_key, workspace_id, params):
+    users, last_id = helper.make_request(base_url, api_key, workspace_id, USERS, params)
 
     canvases = []
 
@@ -26,7 +27,7 @@ def get_canvases(helper, api_key, workspace_id, params):
 
             # Get each canvas from each user
             user_canvases, _ = helper.make_request(
-                api_key, workspace_id, user_canvases_endpoint, {}
+                base_url, api_key, workspace_id, user_canvases_endpoint, {}
             )
 
             if user_canvases:
@@ -82,16 +83,13 @@ def stream_events(inputs: smi.InputDefinition, event_writer: smi.EventWriter):
 
             params = {"limit": 450}
 
-            if checkpoint_value:
-                params["after"] = checkpoint_value
-
-            logger.debug(f"Params for {endpoint_arg}: {params}")
-
             event_count = 0
             sourcetype = f"openai:compliance:{endpoint_arg}"
 
             if endpoint_arg == "canvases":
-                canvases, last_id = get_canvases(helper, api_key, workspace_id, params)
+                canvases, last_id = get_canvases(
+                    helper, base_url, api_key, workspace_id, {}
+                )
 
                 if not canvases:
                     logger.info(f"No canvases found for workspace {workspace_id}")
@@ -120,7 +118,26 @@ def stream_events(inputs: smi.InputDefinition, event_writer: smi.EventWriter):
                     logger.info(f"No data found for {endpoint_arg} at this time.")
                     return
 
+                checkpoint_value_ts = get_float_value(checkpoint_value)
+
+                latest_created_at = checkpoint_value_ts
+
                 for event in data:
+                    created_at = event.get("created_at", 0)
+
+                    if created_at is None:
+                        logger.warning(
+                            f"Skipping event with invalid created_at: {created_at}"
+                        )
+                        continue
+
+                    # event already ingested
+                    if created_at <= checkpoint_value_ts:
+                        continue
+
+                    # track latest created_at timestamp
+                    latest_created_at = max(created_at, latest_created_at)
+
                     event_writer.write_event(
                         smi.Event(
                             data=json.dumps(event),
@@ -131,11 +148,14 @@ def stream_events(inputs: smi.InputDefinition, event_writer: smi.EventWriter):
 
                     event_count += 1
 
-                checkpoint.update(checkpoint_name, last_id)
-                logger.debug(f"New checkpoint saved for {endpoint_arg}: {last_id}")
+                if latest_created_at > checkpoint_value_ts:
+                    checkpoint.update(checkpoint_name, latest_created_at)
+                    logger.debug(
+                        f"New checkpoint saved for {endpoint_arg}: {latest_created_at}"
+                    )
 
             logger.info(
-                f"Execution completed. A total of {event_count} new events were ingested."
+                f"Execution completed. A total of {event_count} new events were ingested for {sourcetype}."
             )
         except Exception as e:  # noqa: BLE001
             logger.error(
