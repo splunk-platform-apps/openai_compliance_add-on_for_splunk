@@ -221,9 +221,10 @@
                             "type": "multipleSelect",
                             "field": "event_type",
                             "label": "Event Type",
-                            "help": "Compliance log categories. Please select one or more compliance log categories from the list.",
+                            "help": "Please select one or more compliance log categories from the list. If the category you need is not listed, type it and add it as a new option.",
                             "required": true,
                             "options": {
+                                "createSearchChoice": true,
                                 "delimiter": ",",
                                 "items": [
                                     {
