@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.3.0] - 2026-09-04
+
+### Added
+- Support for creating custom log categories by allowing users to add new categories not in the predefined list in the Compliance Logs Input.
+
+### Fixed
+- Checkpoint handling to prevent duplicate records by implementing event creation timestamp tracking for Users, Projects and GPTs.
+
+
 ## [v1.2.0] - 2026-05-28
 
 ### Added
