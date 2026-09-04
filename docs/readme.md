@@ -105,7 +105,7 @@ APP_LOG_AUTH           | openai:compliance:app_log_auth             |
 CODEX_LOG              | openai:compliance:codex_log                |
 AUTH_LOG               | openai:compliance:auth_log                 |
 CONVERSATION_MESSAGE   | openai:compliance:conversation_message     |
-\*<OTHER_LOG>          | openai:compliance:<other_log>              |
+\*OTHER_LOG            | openai:compliance:other_log                  |
 
 \* This one will depend on the name of the event type.
 
