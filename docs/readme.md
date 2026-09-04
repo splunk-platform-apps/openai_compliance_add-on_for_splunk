@@ -39,7 +39,7 @@ The **configuration** page is available to all users. To create a new account, f
 
 ### Usage
 
-This add-on includes 2 inputs. Checkpointing logic is implemented to avoid duplicate records. 
+This add-on includes 2 inputs. Checkpointing logic is implemented to prevent duplicate records by storing the latest event creation timestamp. It is currently enabled for the following endpoints: GPTs, Projects, and Users.
 
 Usage and configuration are described in the following steps.
 
@@ -75,7 +75,7 @@ Users                | openai:compliance:users          |
 
 #### OpenAI Compliance Logs Input
 
-This input gets the content of log files for the following event types: AUDIT_LOG, APP_LOG, APP_AUTH_LOG, CODEX_LOG and CONVERSATION_MESSAGE.
+This input gets the content of log files for the following event types: AUDIT_LOG, APP_LOG, APP_AUTH_LOG, CODEX_LOG and CONVERSATION_MESSAGE by default, but you can add new options if needed.
 
 To create such an input, follow these instructions:
 
@@ -91,7 +91,7 @@ Input name                |Corresponding field in Splunk Web | Description|
 |`interval`               |Interval                          |Time interval of input in seconds.|
 |`index`                  |Index                             |The index in which the data will be stored. The default is <code>default</code>.|
 |`account`                |Account to use                    |The account created in the Configuration tab.|
-|`event_type`             |Event Type                        |Required. The log category. You can select multiple event types. Available options: AUDIT_LOG, APP_LOG, APP_AUTH_LOG, AUTH_LOG, CODEX_LOG and CONVERSATION_MESSAGE.
+|`event_type`             |Event Type                        |Required. The log category. You can select multiple event types. Available options: AUDIT_LOG, APP_LOG, APP_AUTH_LOG, AUTH_LOG, CODEX_LOG and CONVERSATION_MESSAGE. If the category you need is not listed, type it and add it as a new option.
 |`start_time`             |From                              |Required. The start date for data ingestion in the format: YYYY-MM-DDTHH:MM:SSZ (for example, `2025-08-01T00:00:00Z`).|
 
 ##### Sourcetypes
@@ -105,6 +105,9 @@ APP_LOG_AUTH           | openai:compliance:app_log_auth             |
 CODEX_LOG              | openai:compliance:codex_log                |
 AUTH_LOG               | openai:compliance:auth_log                 |
 CONVERSATION_MESSAGE   | openai:compliance:conversation_message     |
+\*<OTHER_LOG>          | openai:compliance:<other_log>              |
+
+\* This one will depend on the name of the event type.
 
 ## Troubleshooting
 
