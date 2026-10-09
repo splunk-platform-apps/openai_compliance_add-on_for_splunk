@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.3.1] - 2026-09-04
+
+### Added
+- New Icon.
+
+### Fixed
+- Assign the _time field with the corresponding date.
+
 ## [v1.3.0] - 2026-09-04
 
 ### Added
