@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Added
 - New Icon.
+- New inputs.conf and restmap.conf files.
 
 ### Fixed
 - Assign the _time field with the corresponding date.
