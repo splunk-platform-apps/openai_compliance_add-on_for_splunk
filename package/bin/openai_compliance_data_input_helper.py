@@ -143,6 +143,7 @@ def stream_events(inputs: smi.InputDefinition, event_writer: smi.EventWriter):
                             data=json.dumps(event),
                             index=input_item.get("index"),
                             sourcetype=sourcetype,
+                            time=created_at,
                         )
                     )
 
