@@ -1,5 +1,10 @@
 import json
-from datetime import datetime, timezone
+from datetime import datetime
+try:
+    from datetime import UTC
+except ImportError:
+    from datetime import timezone
+    UTC = timezone.utc
 
 from openai_consts import LIST_FILES
 from openai_helper import OpenAIHelper
@@ -83,13 +88,13 @@ def stream_events(inputs: smi.InputDefinition, event_writer: smi.EventWriter):
                 timestamp_str = event.get("timestamp")
 
                 # timestamp fallback to current time in UTC
-                timestamp = datetime.now(timezone.utc).timestamp()
+                timestamp = datetime.now(UTC).timestamp()
 
                 # convert timestamp to float
                 if timestamp_str:
                     timestamp = (
                         datetime.strptime(timestamp_str, "%Y-%m-%dT%H:%M:%S.%fZ")
-                        .replace(tzinfo=timezone.utc)
+                        .replace(tzinfo=UTC)
                         .timestamp()
                     )
 
